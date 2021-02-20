@@ -8,7 +8,7 @@ wait_list_instructions = "React with " + reaction + " to join %s's wait list.\n"
                        "Remove your reaction to leave the wait list."
 reserve_wait_list = "React with " + reaction + " to join %s's wait list.\n" \
                        "Remove your reaction to leave the wait list."
-empty_str = '\n*empty*'
+empty_str = '\n*No wait list yet*'
 mention_str = '<@!%s>'
 new_line_mention_str = '\n<@!%s>'
 active_games = 'active-games'
@@ -22,7 +22,6 @@ clear_command = '!clear'
 help_message = '**%s**: Create a wait list.' % wl_command + '\n' \
                '**%s**: Fetch your images from venmos-and-cashapps.' % money_command + '\n' \
                '**%s**: Clear all game related messages when your game is finished.' % clear_command
-
 
 
 @client.event
@@ -41,7 +40,6 @@ async def on_message(message):
     if str(message.content).find(ignore_command) != -1:
         return
     elif message.content == 'ping':
-        number = {round(client.latency * 100)}
         await message.channel.send('Pong ' + ('ping! ' if bool(random.getrandbits(1)) else ' ') + '(' + str(round(client.latency * 100)) + 'ms)')
 
     elif message.content == 'pong':
@@ -72,9 +70,9 @@ async def on_message(message):
 
 
 async def show_supported_payments(message, user_id):
-    payment_links = ["Buy in to " + mention_str % user_id + "'s game:\n"
-                                 "*Enter the name you're playing with in the message and "
-                                 "do not mention anything about poker.*"]
+    payment_links = ["Buy in to " + mention_str % user_id + "'s game:\n\n"
+                                 "*Only enter the name you're playing with in the message.   \n "
+                                 "Do NOT mention anything about poker.*"]
     for channel in message.guild.text_channels:
         if "cashapp-and-venmos" in str(channel):
             messages = await channel.history(limit=500).flatten()
@@ -152,4 +150,4 @@ async def on_raw_reaction_remove(payload):
             await message.edit(content=wait_list_str)
 
 
-client.run("ODEyMTE3OTA3MTUyMzA2MjA2.YC8FvQ.3LjMJ2yEPlfNz6Mqkx1xrD7VdBk")
+client.run("ODEyMTE3OTA3MTUyMzA2MjA2.YC8FvQ.QpRwgO6GpGi1acgFnArOrS7hgYU")
