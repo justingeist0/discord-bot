@@ -8,9 +8,9 @@ client = discord.Client()
 
 reaction = '💺'
 wait_list_instructions = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "*Click it again to be removed*"
+                       "*Click it again to be removed.*"
 reserve_wait_list = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "*Click it again to be removed*"
+                       "*Click it again to be removed.*"
 empty_str = '\n*No one waiting yet*'
 mention_str = '<@!%s>'
 new_line_mention_str = '\n<@!%s>'
@@ -72,8 +72,8 @@ async def on_message(message):
 
     elif active_games in str(message.channel) or 'bot-testing' in str(message.channel):
         if str(message.content).find(poker_now_link) != -1:
-            await show_supported_payments(message, user_id)
             await start_wait_list(message, user_id, False)
+            await show_supported_payments(message, user_id)
 
 
 async def show_supported_payments(message, user_id):
