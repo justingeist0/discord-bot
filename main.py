@@ -158,4 +158,4 @@ async def on_raw_reaction_remove(payload):
             await message.edit(content=wait_list_str)
 
 
-client.run("ODEyMTE3OTA3MTUyMzA2MjA2.YC8FvQ.owO0PJwMulb2xyV3x2Sj2FE0eFs")
+client.run(token)
