@@ -22,9 +22,14 @@ money_command = '!buyin'.lower()
 ignore_command = '!botignore'
 help_command = '!pighelp'
 clear_command = '!clear'
-help_message = '**%s**: Create a wait list.' % wl_command + '\n' \
-               '**%s**: Fetch your images from venmos-and-cashapps.' % money_command + '\n' \
-               '**%s**: Clear all game related messages when your game is finished.' % clear_command
+help_message = '**Poker Pig Commands:**\n'\
+               '**%s**: Show help message.' % help_command + '\n'\
+               '**%s**: Create a wait list.' % wl_command + '\n' \
+               '**%s**: Fetch all your images from venmos-and-cashapps.' % money_command + '\n' \
+               '**%s**: Remove all messages when your game is finished that you would have to delete manually.' % clear_command + '\n\n' \
+               'When a game link is posted in the active-games(or bot-testing) channel, *%s* and *%s* are called automatically.' % (money_command, wl_command) + '\n\n' \
+               'If you have any questions or bug reports message Justin.\n' \
+               '*Poker Pig Version 1.0, last updated on 2/20/2020*'
 
 
 @client.event
@@ -153,4 +158,4 @@ async def on_raw_reaction_remove(payload):
             await message.edit(content=wait_list_str)
 
 
-client.run(token)
+client.run("ODEyMTE3OTA3MTUyMzA2MjA2.YC8FvQ.owO0PJwMulb2xyV3x2Sj2FE0eFs")
