@@ -25,7 +25,7 @@ clear_command = '!clear'
 help_message = '*Poker Pig Commands:*\n'\
                '**%s**: Show help message.' % help_command + '\n'\
                '**%s**: Create a wait list.' % wl_command + '\n' \
-               '**%s**: Fetch all your images from venmos-and-cashapps.' % money_command + '\n' \
+               '**%s**: Fetch all your images from cashapp-and-venmos.' % money_command + '\n' \
                '**%s**: Delete all messages that you would have to remove manually when your game is finished.' % clear_command + '\n\n' \
                'When a game link is posted in the active-games(or bot-testing) channel, **%s** and **%s** are called automatically.' % (money_command, wl_command) + '\n\n' \
                'If you have any questions or bug reports message Justin.\n' \
