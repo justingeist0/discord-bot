@@ -1,13 +1,16 @@
 import discord
 import random
+import os
+
+token = os.getenv("DISCORD_BOT_TOKEN")
 
 client = discord.Client()
 
-reaction = '👀'
-wait_list_instructions = "React with " + reaction + " to join %s's wait list.\n" \
-                       "Remove your reaction to leave the wait list."
-reserve_wait_list = "React with " + reaction + " to join %s's wait list.\n" \
-                       "Remove your reaction to leave the wait list."
+reaction = '💺'
+wait_list_instructions = "Click the " + reaction + " reaction to join %s's wait list.\n" \
+                       "Click it again to leave the wait list."
+reserve_wait_list = "Click the " + reaction + " reaction to join %s's wait list.\n" \
+                       "Click it again to leave the wait list."
 empty_str = '\n*No wait list yet*'
 mention_str = '<@!%s>'
 new_line_mention_str = '\n<@!%s>'
@@ -32,7 +35,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author == client.user:
-        if str(message.content).find('Remove your reaction to leave the wait list') != -1:
+        if str(message.content).find('Click it again to leave the wait list') != -1:
             await message.add_reaction(reaction)
         return
     print(message.content)
@@ -150,4 +153,4 @@ async def on_raw_reaction_remove(payload):
             await message.edit(content=wait_list_str)
 
 
-client.run("ODEyMTE3OTA3MTUyMzA2MjA2.YC8FvQ.QpRwgO6GpGi1acgFnArOrS7hgYU")
+client.run(token)
