@@ -8,10 +8,10 @@ client = discord.Client()
 
 reaction = '💺'
 wait_list_instructions = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "Click it again to leave the wait list."
+                       "*Click it again to be removed*"
 reserve_wait_list = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "Click it again to leave the wait list."
-empty_str = '\n*No wait list yet*'
+                       "*Click it again to be removed*"
+empty_str = '\n*No one waiting yet*'
 mention_str = '<@!%s>'
 new_line_mention_str = '\n<@!%s>'
 active_games = 'active-games'
@@ -28,8 +28,7 @@ help_message = '*Poker Pig Commands:*\n'\
                '**%s**: Fetch all your images from cashapp-and-venmos.' % money_command + '\n' \
                '**%s**: Delete all messages that you would have to remove manually when your game is finished.' % clear_command + '\n\n' \
                'When a game link is posted in the active-games(or bot-testing) channel, **%s** and **%s** are called automatically.' % (money_command, wl_command) + '\n\n' \
-               'If you have any questions or bug reports message Justin.\n' \
-               '*Poker Pig version 1.0, last updated on 2/20/2020*'
+               # '*v1.0 last updated on 2/20/2020*'
 
 
 @client.event
@@ -40,7 +39,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author == client.user:
-        if str(message.content).find('Click it again to leave the wait list') != -1:
+        if str(message.content).find('Click it again to be removed') != -1:
             await message.add_reaction(reaction)
         return
     print(message.content)
