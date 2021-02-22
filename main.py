@@ -42,7 +42,6 @@ async def on_message(message):
         if str(message.content).find('Click it again to be removed') != -1:
             await message.add_reaction(reaction)
         return
-    print(message.content)
     user_id = message.author.id
     if str(message.content).find(ignore_command) != -1:
         return
@@ -70,15 +69,21 @@ async def on_message(message):
     elif money_command == str(message.content).lower():
         await show_supported_payments(message, user_id)
 
-    elif active_games in str(message.channel) or 'bot-testing' in str(message.channel):
-        if str(message.content).find(poker_now_link) != -1:
+    elif str(message.content).find(poker_now_link) != -1:
+        if active_games in str(message.channel) or 'bot-testing' in str(message.channel):
             await start_wait_list(message, user_id, False)
             await show_supported_payments(message, user_id)
+        else:
+            for r in message.author.roles:
+                if "host" in str(r).lower():
+                    return
+            await message.reply(mention_str % user_id + " Bad man, Bad man! you are not authorized to post games here!")
+            await message.delete()
 
 
 async def show_supported_payments(message, user_id):
     payment_links = ["Buy in to " + mention_str % user_id + "'s game:\n\n"
-                                 "*Only enter the name you're playing with in the message.   \n "
+                                 "*Only enter the name you're playing with in the message.\n"
                                  "Do NOT mention anything about poker.*"]
     for channel in message.guild.text_channels:
         if "cashapp-and-venmos" in str(channel):
