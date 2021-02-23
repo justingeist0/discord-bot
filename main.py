@@ -82,9 +82,8 @@ async def on_message(message):
 
 
 async def show_supported_payments(message, user_id):
-    payment_links = ["Buy in to " + mention_str % user_id + "'s game:\n\n"
-                                 "*Only enter the name you're playing with in the message.\n"
-                                 "Do NOT mention anything about poker.*"]
+    payment_links = [":moneybag:" + mention_str % user_id + ":moneybag:\n"
+                                 "*Enter your table name for each payment and request.*\n"]
     for channel in message.guild.text_channels:
         if "cashapp-and-venmos" in str(channel):
             messages = await channel.history(limit=500).flatten()
@@ -94,7 +93,7 @@ async def show_supported_payments(message, user_id):
                         payment_links.append(image.url)
             break
     if len(payment_links) == 1:
-        payment_links.append('**Nothing found.**')
+        payment_links.append('**No images found.**')
     for i in payment_links:
         await message.channel.send(i)
 
