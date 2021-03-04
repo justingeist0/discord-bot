@@ -3,7 +3,7 @@
 To run the code create a new bot here:
 https://discord.com/developers/applications
 
-Then copy the bot's token and assign it to token.
-example: token = "19kj990uf8asdf0"
+Copy the bot's token and assign it to token at the beginning of the file.
+(token = "KjfAjf8Ajn8A90wNjwnj8ShbFkjaSHFnbbfAUISHfbhUIAS83hLAOIF83fh")
 
-Add the bot to a test server and do whatever you want!
+That's all folks.
