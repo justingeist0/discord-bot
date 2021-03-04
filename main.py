@@ -25,6 +25,7 @@ help_command = '!pighelp'
 clear_command = '!clear'
 help_message = '*Poker Pig Commands:*\n'\
                '**%s**: Show help message.' % help_command + '\n'\
+               '**%s**: Create a reserve wait list.' % reserve_command + '\n' \
                '**%s**: Create a wait list.' % wl_command + '\n' \
                '**%s**: Fetch all your images from cashapp-and-venmos.' % money_command + '\n' \
                '**%s**: Delete all messages related to your game in active-games.' % clear_command + '\n\n' \
@@ -172,7 +173,7 @@ async def on_raw_reaction_remove(payload):
             if wait_list_str.find(mention_user) != -1:
                 wait_list_str = wait_list_str.replace(mention_user, '')
                 name_idx = wait_list_str.find('<@!')
-                if reaction in wait_list_str[name_idx-10:name_idx]:
+                if reaction in wait_list_str[0:name_idx]:
                     start_idx = wait_list_str.find('\n\n')
                     wait_list_str = wait_list_str[0:start_idx] + empty_str + wait_list_str[start_idx:]
                 await message.edit(content=wait_list_str)
