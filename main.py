@@ -7,10 +7,10 @@ token = os.getenv("DISCORD_BOT_TOKEN")
 client = discord.Client()
 
 reaction = '💺'
-wait_list_instructions = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "*Click it again to be removed.*"
-reserve_wait_list = "Click the " + reaction + " reaction to join %s's wait list.\n" \
-                       "*Click it again to be removed.*"
+wait_list_instructions = "React with " + reaction + " to join %s's wait list.\n" \
+                       "*Remove reaction when you are no longer waiting.*"
+reserve_wait_list = "React with " + reaction + " to reserve a seat at %s's upcoming game.\n" \
+                       "*Remove reaction to cancel reservation.*"
 empty_str = '\n*No one waiting yet*'
 mention_str = '<@!%s>'
 new_line_mention_str = '\n<@!%s>'
@@ -18,6 +18,7 @@ active_games = 'active-games'
 poker_now_link = 'pokernow.club'
 
 wl_command = '!wl'.lower()
+reserve_command = '!reserve'.lower()
 money_command = '!buyin'.lower()
 ignore_command = '!botignore'
 help_command = '!pighelp'
@@ -26,9 +27,9 @@ help_message = '*Poker Pig Commands:*\n'\
                '**%s**: Show help message.' % help_command + '\n'\
                '**%s**: Create a wait list.' % wl_command + '\n' \
                '**%s**: Fetch all your images from cashapp-and-venmos.' % money_command + '\n' \
-               '**%s**: Delete all messages that you would have to remove manually when your game is finished.' % clear_command + '\n\n' \
+               '**%s**: Delete all messages related to your game in active-games.' % clear_command + '\n\n' \
                'When a game link is posted in the active-games(or bot-testing) channel, **%s** and **%s** are called automatically.' % (money_command, wl_command) + '\n\n' \
-               # '*v1.0 last updated on 2/20/2020*'
+               '*Poker Pig last updated on 3/03/2021*'
 
 
 @client.event
@@ -39,7 +40,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.author == client.user:
-        if str(message.content).find('Click it again to be removed') != -1:
+        if str(message.content).find(reaction) != -1:
             await message.add_reaction(reaction)
         return
     user_id = message.author.id
@@ -68,6 +69,9 @@ async def on_message(message):
         await clear_messages(message)
 
     elif wl_command == lower_case_message:
+        await start_wait_list(message, user_id, False)
+
+    elif reserve_command == lower_case_message:
         await start_wait_list(message, user_id, True)
 
     elif money_command == lower_case_message:
@@ -103,8 +107,8 @@ async def show_supported_payments(message, user_id):
 
 
 async def start_wait_list(message, name_id, is_reserve_wait_list):
-    message_to_send = "**Wait List:**" \
-                      "%s\n\n" % empty_str + (reserve_wait_list % (mention_str % name_id) if is_reserve_wait_list \
+    message_to_send = "**Line up:**" if is_reserve_wait_list else "**Wait List:**" \
+                      "%s\n\n" % empty_str + (reserve_wait_list % (mention_str % name_id) if is_reserve_wait_list
                         else wait_list_instructions % (mention_str % name_id))
     await message.channel.send(message_to_send)
 
