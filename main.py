@@ -107,7 +107,8 @@ async def show_supported_payments(message, user_id):
 
 
 async def start_wait_list(message, name_id, is_reserve_wait_list):
-    message_to_send = ("**Line up:**" if is_reserve_wait_list else "**Wait List:**") + \
+    header_str = "**Line up:**" if is_reserve_wait_list else "**Wait List:**"
+    message_to_send = header_str + \
                       "%s\n\n" % empty_str + (reserve_wait_list % (mention_str % name_id) if is_reserve_wait_list
                         else wait_list_instructions % (mention_str % name_id))
     await message.channel.send(message_to_send)
