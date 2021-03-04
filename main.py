@@ -43,33 +43,37 @@ async def on_message(message):
             await message.add_reaction(reaction)
         return
     user_id = message.author.id
-    if str(message.content).find(ignore_command) != -1:
+    lower_case_message = str(message.content).lower()
+    if lower_case_message.find(ignore_command) != -1:
         return
-    elif message.content == 'ping':
+    elif lower_case_message == 'ping':
         await message.channel.send('Pong ' + ('ping! ' if bool(random.getrandbits(1)) else ' ') + '(' + str(round(client.latency * 100)) + 'ms)')
 
-    elif message.content == 'pong':
+    elif lower_case_message == 'pong':
         await message.channel.send('Ping' + (' pong!' if bool(random.getrandbits(1)) else ''))
 
-    elif message.content == 'beep':
+    elif lower_case_message == 'beep':
         await message.channel.send('Boop' + (' beep!' if bool(random.getrandbits(1)) else ''))
 
-    elif message.content == 'boop':
+    elif lower_case_message == 'boop':
         await message.channel.send('Beep' + (' boop!' if bool(random.getrandbits(1)) else ''))
 
-    elif help_command == str(message.content).lower():
+    elif lower_case_message == 'achoo':
+        await message.channel.send('Bless you!' if bool(random.getrandbits(1)) else 'Cover your mouth!')
+
+    elif help_command == lower_case_message:
         await message.channel.send(help_message)
 
-    elif clear_command == str(message.content).lower():
+    elif clear_command == lower_case_message:
         await clear_messages(message)
 
-    elif wl_command == str(message.content).lower():
+    elif wl_command == lower_case_message:
         await start_wait_list(message, user_id, True)
 
-    elif money_command == str(message.content).lower():
+    elif money_command == lower_case_message:
         await show_supported_payments(message, user_id)
 
-    elif str(message.content).find(poker_now_link) != -1:
+    elif lower_case_message.find(poker_now_link) != -1:
         if active_games in str(message.channel) or 'bot-testing' in str(message.channel):
             await start_wait_list(message, user_id, False)
             await show_supported_payments(message, user_id)
@@ -140,7 +144,16 @@ async def add_to_wait_list(message, mention_user):
         if wait_list_str.find(mention_user) != -1:
             return
         wait_list_str = wait_list_str[0:start_idx] + mention_user + wait_list_str[start_idx:]
-        await message.edit(content=wait_list_str)
+        wait_list_str = remove_numbers_before_mentions(wait_list_str)
+        await message.edit(content=add_numbers_before_mentions(wait_list_str))
+
+
+def remove_numbers_before_mentions(waist_list_str):
+    return waist_list_str
+
+
+def add_numbers_before_mentions(waist_list_str):
+    return waist_list_str
 
 
 @client.event
@@ -151,14 +164,13 @@ async def on_raw_reaction_remove(payload):
         if message.author == client.user:
             wait_list_str = str(message.content)
             mention_user = new_line_mention_str % payload.user_id
-            if wait_list_str.find(mention_user) == -1:
-                return
-            wait_list_str = wait_list_str.replace(mention_user, '')
-            name_idx = wait_list_str.find('<@!')
-            if 'join' in wait_list_str[name_idx-10:name_idx]:
-                start_idx = wait_list_str.find('\n\n')
-                wait_list_str = wait_list_str[0:start_idx] + empty_str + wait_list_str[start_idx:]
-            await message.edit(content=wait_list_str)
+            if wait_list_str.find(mention_user) != -1:
+                wait_list_str = wait_list_str.replace(mention_user, '')
+                name_idx = wait_list_str.find('<@!')
+                if 'join' in wait_list_str[name_idx-10:name_idx]:
+                    start_idx = wait_list_str.find('\n\n')
+                    wait_list_str = wait_list_str[0:start_idx] + empty_str + wait_list_str[start_idx:]
+                await message.edit(content=wait_list_str)
 
 
 client.run(token)
