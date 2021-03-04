@@ -142,7 +142,7 @@ async def on_raw_reaction_add(payload):
 
 
 async def add_to_wait_list(message, mention_user):
-    if message.author == client.user and str(message.content).find("Wait List:") != -1:
+    if message.author == client.user and str(message.content).find(reaction) != -1:
         wait_list_str = str(message.content)
         wait_list_str = wait_list_str.replace(empty_str, "")
         start_idx = wait_list_str.find('\n\n')
