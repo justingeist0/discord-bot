@@ -225,7 +225,7 @@ async def add_to_wait_list(wl_message, user_id):
 @BOT.command(name=RANK_REQUEST_COMMAND)
 async def rank_request(ctx: Context, role):
     if is_admin(ctx):
-        sent = await ctx.channel.send("React with " + RANK_REQUEST_EMOJI + " to be given/removed from " + role + " role")
+        sent = await ctx.channel.send("React with " + RANK_REQUEST_EMOJI + " to be given " + role + " role")
         await sent.add_reaction(RANK_REQUEST_EMOJI)
         await ctx.message.delete()
 
