@@ -227,6 +227,7 @@ async def rank_request(ctx: Context, role):
     if is_admin(ctx):
         sent = await ctx.channel.send("React with " + RANK_REQUEST_EMOJI + " to be given/removed from " + role + " role")
         await sent.add_reaction(RANK_REQUEST_EMOJI)
+        await ctx.message.delete()
 
 
 async def give_player_rank(member, rank_request_message):
